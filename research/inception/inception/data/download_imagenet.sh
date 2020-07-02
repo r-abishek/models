@@ -27,16 +27,16 @@
 #  ./download_imagenet.sh [dir name] [synsets file]
 set -e
 
-if [ "x$IMAGENET_ACCESS_KEY" == x -o "x$IMAGENET_USERNAME" == x ]; then
-  cat <<END
-In order to download the imagenet data, you have to create an account with
-image-net.org. This will get you a username and an access key. You can set the
-IMAGENET_USERNAME and IMAGENET_ACCESS_KEY environment variables, or you can
-enter the credentials here.
-END
-  read -p "Username: " IMAGENET_USERNAME
-  read -p "Access key: " IMAGENET_ACCESS_KEY
-fi
+# if [ "x$IMAGENET_ACCESS_KEY" == x -o "x$IMAGENET_USERNAME" == x ]; then
+#   cat <<END
+# In order to download the imagenet data, you have to create an account with
+# image-net.org. This will get you a username and an access key. You can set the
+# IMAGENET_USERNAME and IMAGENET_ACCESS_KEY environment variables, or you can
+# enter the credentials here.
+# END
+#   read -p "Username: " IMAGENET_USERNAME
+#   read -p "Access key: " IMAGENET_ACCESS_KEY
+# fi
 
 OUTDIR="${1:-./imagenet-data}"
 SYNSETS_FILE="${2:-./synsets.txt}"
@@ -46,21 +46,22 @@ mkdir -p "${OUTDIR}"
 INITIAL_DIR=$(pwd)
 BBOX_DIR="${OUTDIR}bounding_boxes"
 mkdir -p "${BBOX_DIR}"
-cd "${OUTDIR}"
+# cd "${OUTDIR}"
 
 # Download and process all of the ImageNet bounding boxes.
-BASE_URL="http://www.image-net.org/challenges/LSVRC/2012/nonpub"
+# BASE_URL="http://www.image-net.org/challenges/LSVRC/2012/nonpub"
 
 # See here for details: http://www.image-net.org/download-bboxes
-BOUNDING_BOX_ANNOTATIONS="${BASE_URL}/ILSVRC2012_bbox_train_v2.tar.gz"
-BBOX_TAR_BALL="${BBOX_DIR}/annotations.tar.gz"
-echo "Downloading bounding box annotations."
-wget "${BOUNDING_BOX_ANNOTATIONS}" -O "${BBOX_TAR_BALL}" || BASE_URL_CHANGE=1
-if [ $BASE_URL_CHANGE ]; then
-  BASE_URL="http://www.image-net.org/challenges/LSVRC/2012/nnoupb"
-  BOUNDING_BOX_ANNOTATIONS="${BASE_URL}/ILSVRC2012_bbox_train_v2.tar.gz"
-  wget "${BOUNDING_BOX_ANNOTATIONS}" -O "${BBOX_TAR_BALL}"
-fi
+# BOUNDING_BOX_ANNOTATIONS="${BASE_URL}/ILSVRC2012_bbox_train_v2.tar.gz"
+# BBOX_TAR_BALL="${BBOX_DIR}/annotations.tar.gz"
+BBOX_TAR_BALL="${OUTDIR}../annotations.tar.gz"
+# echo "Downloading bounding box annotations."
+# wget "${BOUNDING_BOX_ANNOTATIONS}" -O "${BBOX_TAR_BALL}" || BASE_URL_CHANGE=1
+# if [ $BASE_URL_CHANGE ]; then
+#   BASE_URL="http://www.image-net.org/challenges/LSVRC/2012/nnoupb"
+#   BOUNDING_BOX_ANNOTATIONS="${BASE_URL}/ILSVRC2012_bbox_train_v2.tar.gz"
+#   wget "${BOUNDING_BOX_ANNOTATIONS}" -O "${BBOX_TAR_BALL}"
+# fi
 echo "Uncompressing bounding box annotations ..."
 tar xzf "${BBOX_TAR_BALL}" -C "${BBOX_DIR}"
 
@@ -73,8 +74,8 @@ VALIDATION_TARBALL="ILSVRC2012_img_val.tar"
 OUTPUT_PATH="${OUTDIR}validation/"
 mkdir -p "${OUTPUT_PATH}"
 cd "${OUTDIR}/.."
-echo "Downloading ${VALIDATION_TARBALL} to ${OUTPUT_PATH}."
-wget -nd -c "${BASE_URL}/${VALIDATION_TARBALL}"
+# echo "Downloading ${VALIDATION_TARBALL} to ${OUTPUT_PATH}."
+# wget -nd -c "${BASE_URL}/${VALIDATION_TARBALL}"
 tar xf "${VALIDATION_TARBALL}" -C "${OUTPUT_PATH}"
 
 # Download all images from the ImageNet 2012 train dataset.
@@ -82,8 +83,8 @@ TRAIN_TARBALL="ILSVRC2012_img_train.tar"
 OUTPUT_PATH="${OUTDIR}train/"
 mkdir -p "${OUTPUT_PATH}"
 cd "${OUTDIR}/.."
-echo "Downloading ${TRAIN_TARBALL} to ${OUTPUT_PATH}."
-wget -nd -c "${BASE_URL}/${TRAIN_TARBALL}"
+# echo "Downloading ${TRAIN_TARBALL} to ${OUTPUT_PATH}."
+# wget -nd -c "${BASE_URL}/${TRAIN_TARBALL}"
 
 # Un-compress the individual tar-files within the train tar-file.
 echo "Uncompressing individual train tar-balls in the training data."
