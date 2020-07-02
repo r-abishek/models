@@ -46,6 +46,20 @@
 #
 # usage:
 #  ./download_and_preprocess_imagenet.sh [data-dir]
+
+sudo apt update
+sudo apt install python-pip
+sudo apt install python3-pip
+
+sudo pip install --upgrade pip setuptools
+sudo pip3 install --upgrade pip setuptools
+
+pip install numpy
+pip3 install numpy
+
+pip install tensorflow==1.15
+pip3 install tensorflow==1.15
+
 set -e
 
 if [ -z "$1" ]; then
