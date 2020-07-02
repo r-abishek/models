@@ -89,12 +89,14 @@ When you run the below script, please enter *USERNAME* and *PASSWORD* when
 prompted. This will occur at the very beginning. Once these values are entered,
 you will not need to interact with the script again.
 
+Place "ILSVRC2012_img_train.tar", "ILSVRC2012_img_val.tar" and "annotations.tar.gz" in "$HOME/imagenet-data" or a directory of your choice.
+
 ```shell
 # location of where to place the ImageNet data
 DATA_DIR=$HOME/imagenet-data
 
 # build the preprocessing script.
-cd tensorflow-models/inception
+cd models/research/inception
 bazel build //inception:download_and_preprocess_imagenet
 
 # run it
