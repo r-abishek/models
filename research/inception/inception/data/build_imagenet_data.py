@@ -503,6 +503,7 @@ def _find_image_files(data_dir, labels_file):
   challenge_synsets = [l.strip() for l in
                        tf.gfile.FastGFile(labels_file, 'r').readlines()]
 
+  challenge_synsets = challenge_synsets[:20]
   labels = []
   filenames = []
   synsets = []
